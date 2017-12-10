@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 	bool inputAttack;
 	bool isJumping = false;
 
+
 	Animator animator;
 	SpriteRenderer render;
 
@@ -38,7 +39,8 @@ public class Player : MonoBehaviour {
 
 	void Update() {
 		input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
-		inputJump = Input.GetKeyDown (KeyCode.Space);
+		if (!isJumping)
+			inputJump = Input.GetAxisRaw ("Jump") > 0 ? true : false;;
 
 
 		Attack ();
@@ -57,7 +59,7 @@ public class Player : MonoBehaviour {
 			logicJumpHeight = 0;
 		}
 
-		if (inputJump) {
+		if (inputJump && !isJumping) {
 			isJumping = true;
 			animator.SetBool ("jump", true);
 			if (logicJumpHeight <= 0) {
@@ -80,7 +82,19 @@ public class Player : MonoBehaviour {
 			}
 		}
 
-		inputJump = false;
+
+	}
+
+	void OnJumpStart()
+	{
+//		Debug.Log ("OnJumpStart");
+
+	}
+
+	void OnJumpEnd()
+	{
+		Debug.Log ("OnJumpEnd " + isJumping);
+
 	}
 
 	void Attack(){
@@ -122,7 +136,8 @@ public class Player : MonoBehaviour {
 			
 	}
 
-	void FixedUpdate(){
-		
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "Enemy")
+			Debug.Log ("attack enemy");
 	}
 }
