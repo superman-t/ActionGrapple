@@ -252,6 +252,9 @@ MonoBehaviour:
   jumpHeight: 2
   timeToJumpApex: 0.2
   moveSpeed: 3
+  children:
+  - {fileID: 776776779}
+  - {fileID: 1094288091}
 --- !u!212 &584929685
 SpriteRenderer:
   m_ObjectHideFlags: 0
